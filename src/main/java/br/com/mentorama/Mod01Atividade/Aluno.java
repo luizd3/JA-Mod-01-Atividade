@@ -2,21 +2,21 @@ package br.com.mentorama.Mod01Atividade;
 
 public class Aluno {
 
-    private int id;
+    private Integer id;
     private String nome;
-    private int idade;
+    private Integer idade;
 
-    public Aluno(int id, String nome, int idade) {
+    public Aluno(Integer id, String nome, Integer idade) {
         this.id = id;
         this.nome = nome;
         this.idade = idade;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -28,11 +28,11 @@ public class Aluno {
         this.nome = nome;
     }
 
-    public int getIdade() {
+    public Integer getIdade() {
         return idade;
     }
 
-    public void setIdade(int idade) {
+    public void setIdade(Integer idade) {
         this.idade = idade;
     }
 }
