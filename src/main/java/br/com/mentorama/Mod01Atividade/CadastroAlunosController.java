@@ -1,5 +1,8 @@
 package br.com.mentorama.Mod01Atividade;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -32,14 +35,20 @@ public class CadastroAlunosController {
     }
 
     @PutMapping
-    public String update(@RequestBody final Aluno atualizaAluno) {
+    public ResponseEntity update(@RequestBody final Aluno atualizaAluno) {
         listaAlunos.stream()
                 .filter(aln -> aln.getId().equals(atualizaAluno.getId()))
                 .forEach(aln -> {
                     aln.setNome(atualizaAluno.getNome());
                     aln.setIdade(atualizaAluno.getIdade());
                 });
-        return "Aluno ID " + String.valueOf(atualizaAluno.getId()) + " atualizado.";
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable("id") Integer id) {
+        listaAlunos.removeIf(aln -> aln.getId().equals(id));
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 }
