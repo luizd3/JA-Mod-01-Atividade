@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/alunos")
@@ -23,6 +24,14 @@ public class CadastroAlunosController {
     @GetMapping
     public List<Aluno> findAll() {
         return listaAlunos;
+    }
+
+    @GetMapping("/{id}")
+    public Aluno findById(@PathVariable("id") Integer id) {
+        return listaAlunos.stream()
+                .filter(aln -> aln.getId().equals(id))
+                .findFirst()
+                .orElse(null);
     }
 
     @PostMapping
