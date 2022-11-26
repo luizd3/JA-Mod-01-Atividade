@@ -31,4 +31,15 @@ public class CadastroAlunosController {
         return "Aluno cadastrado. ID: " + String.valueOf(novoAluno.getId());
     }
 
+    @PutMapping
+    public String update(@RequestBody final Aluno atualizaAluno) {
+        listaAlunos.stream()
+                .filter(aln -> aln.getId().equals(atualizaAluno.getId()))
+                .forEach(aln -> {
+                    aln.setNome(atualizaAluno.getNome());
+                    aln.setIdade(atualizaAluno.getIdade());
+                });
+        return "Aluno ID " + String.valueOf(atualizaAluno.getId()) + " atualizado.";
+    }
+
 }
