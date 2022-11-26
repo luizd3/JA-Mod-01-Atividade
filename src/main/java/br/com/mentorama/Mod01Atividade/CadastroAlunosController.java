@@ -22,7 +22,12 @@ public class CadastroAlunosController {
 
 
     @GetMapping
-    public List<Aluno> findAll() {
+    public List<Aluno> findAll(@RequestParam(required = false) String nome) {
+        if (nome != null) {
+            return listaAlunos.stream()
+                    .filter(aln -> aln.getNome().contains(nome))
+                    .collect(Collectors.toList());
+        }
         return listaAlunos;
     }
 
