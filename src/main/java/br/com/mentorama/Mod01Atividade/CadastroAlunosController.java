@@ -26,29 +26,29 @@ public class CadastroAlunosController {
     }
 
     @PostMapping
-    public String add(@RequestBody final Aluno novoAluno) {
+    public ResponseEntity<String> add(@RequestBody final Aluno novoAluno) {
         if (novoAluno.getId() == null) {
             novoAluno.setId(listaAlunos.size() + 1);
         }
         listaAlunos.add(novoAluno);
-        return "Aluno cadastrado. ID: " + String.valueOf(novoAluno.getId());
+        return new ResponseEntity<>("Aluno cadastrado. ID: " + String.valueOf(novoAluno.getId()), HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity update(@RequestBody final Aluno atualizaAluno) {
+    public ResponseEntity<String> update(@RequestBody final Aluno atualizaAluno) {
         listaAlunos.stream()
                 .filter(aln -> aln.getId().equals(atualizaAluno.getId()))
                 .forEach(aln -> {
                     aln.setNome(atualizaAluno.getNome());
                     aln.setIdade(atualizaAluno.getIdade());
                 });
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("Aluno ID " + atualizaAluno.getId() + " atualizado.", HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable("id") Integer id) {
+    public ResponseEntity<String> delete(@PathVariable("id") Integer id) {
         listaAlunos.removeIf(aln -> aln.getId().equals(id));
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("Aluno ID " + id + " apagado da lista.", HttpStatus.ACCEPTED);
     }
 
 }
