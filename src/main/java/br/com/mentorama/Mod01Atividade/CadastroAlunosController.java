@@ -1,13 +1,13 @@
 package br.com.mentorama.Mod01Atividade;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/alunos")
@@ -20,26 +20,14 @@ public class CadastroAlunosController {
         this.listaAlunos = new ArrayList<>();
     }
 
-
     @GetMapping
     public List<Aluno> findAll(@RequestParam(required = false) String nome, Integer idade) {
-        if (nome != null && idade == null) {
-            return listaAlunos.stream()
-                    .filter(aln -> aln.getNome().contains(nome))
-                    .collect(Collectors.toList());
-        }
-        if (nome == null && idade != null) {
-            return listaAlunos.stream()
-                    .filter(aln -> aln.getIdade().equals(idade))
-                    .collect(Collectors.toList());
-        }
-        if (nome != null && idade != null) {
-            return listaAlunos.stream()
-                    .filter(aln -> aln.getNome().contains(nome))
-                    .filter(aln -> aln.getIdade().equals(idade))
-                    .collect(Collectors.toList());
-        }
-        return listaAlunos;
+        Stream<Aluno> listaAlunosStream = listaAlunos.stream();
+        if (nome != null)
+            listaAlunosStream = listaAlunosStream.filter(aln -> aln.getNome().contains(nome));
+        if (idade != null)
+            listaAlunosStream = listaAlunosStream.filter(aln -> aln.getIdade().equals(idade));
+        return listaAlunosStream.collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
