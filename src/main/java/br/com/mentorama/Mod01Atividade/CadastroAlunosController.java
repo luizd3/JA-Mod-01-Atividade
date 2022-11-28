@@ -22,10 +22,21 @@ public class CadastroAlunosController {
 
 
     @GetMapping
-    public List<Aluno> findAll(@RequestParam(required = false) String nome) {
-        if (nome != null) {
+    public List<Aluno> findAll(@RequestParam(required = false) String nome, Integer idade) {
+        if (nome != null && idade == null) {
             return listaAlunos.stream()
                     .filter(aln -> aln.getNome().contains(nome))
+                    .collect(Collectors.toList());
+        }
+        if (nome == null && idade != null) {
+            return listaAlunos.stream()
+                    .filter(aln -> aln.getIdade().equals(idade))
+                    .collect(Collectors.toList());
+        }
+        if (nome != null && idade != null) {
+            return listaAlunos.stream()
+                    .filter(aln -> aln.getNome().contains(nome))
+                    .filter(aln -> aln.getIdade().equals(idade))
                     .collect(Collectors.toList());
         }
         return listaAlunos;
