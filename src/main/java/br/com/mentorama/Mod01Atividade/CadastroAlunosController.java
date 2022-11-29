@@ -21,7 +21,7 @@ public class CadastroAlunosController {
     }
 
     @GetMapping
-    public List<Aluno> findAll(@RequestParam(required = false) String nome, Integer idade) {
+    public List<Aluno> findAll(@RequestParam(required = false) String nome, @RequestParam(required = false) Integer idade) {
         Stream<Aluno> listaAlunosStream = listaAlunos.stream();
         if (nome != null)
             listaAlunosStream = listaAlunosStream.filter(aln -> aln.getNome().contains(nome));
